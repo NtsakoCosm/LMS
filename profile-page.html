@@ -1,0 +1,813 @@
+
+<!DOCTYPE html>
+<html lang="en">
+{%load static%}
+<head>
+
+  <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <title>
+    EduDash•
+  </title>
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <!-- Nucleo Icons -->
+  <link href="{% static 'structure/nucleo-icons.css' %}" rel="stylesheet" type="" />
+  <!-- CSS Files -->
+  <link href="{% static 'structure/blk-design-system.css' %}" rel="stylesheet" type="text/css"/>
+  <link href="{%static 'structure/Chart.JS' %}">
+  <script nonce="undefined" src="https://cdn.zingchart.com/zingchart.min.js"></script>
+</head>
+
+<body class="profile-page">
+
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-transparent  " >
+    <div class="container">
+      <div class="navbar-translate">
+        <a class="navbar-brand" href="index.html" rel="tooltip" title="Made by Ntsako Ngwana" data-placement="bottom" target="_blank">
+          <span><img src="{% static 'structure/lofo.png' %}" width="25"></span>
+          <span>EDUDash•</span> Your DashBoard
+        </a>
+        <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-bar bar1"></span>
+          <span class="navbar-toggler-bar bar2"></span>
+          <span class="navbar-toggler-bar bar3"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse justify-content-end" id="navigation">
+        <div class="navbar-collapse-header">
+          <div class="row">
+            <div class="col-6 collapse-brand">
+              <a>
+                BLK•
+              </a>
+            </div>
+            <div class="col-6 collapse-close text-right">
+              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="tim-icons icon-simple-remove"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <ul class="navbar-nav">
+          <li class="nav-item p-0">
+            <a class="nav-link" rel="tooltip" title="Follow us on Twitter" data-placement="bottom" href="https://twitter.com/CreativeTim" target="_blank">
+              <i class="fab fa-twitter"></i>
+              <p class="d-lg-none d-xl-none">Twitter</p>
+            </a>
+          </li>
+          <li class="nav-item p-0">
+            <a class="nav-link" rel="tooltip" title="Like us on Facebook" data-placement="bottom" href="https://www.facebook.com/CreativeTim" target="_blank">
+              <i class="fab fa-facebook-square"></i>
+              <p class="d-lg-none d-xl-none">Facebook</p>
+            </a>
+          </li>
+          <li class="nav-item p-0">
+            <a class="nav-link" rel="tooltip" title="Follow us on Instagram" data-placement="bottom" href="https://www.instagram.com/CreativeTimOfficial" target="_blank">
+              <i class="fab fa-instagram"></i>
+              <p class="d-lg-none d-xl-none">Instagram</p>
+            </a>
+          </li>
+          <li class="dropdown nav-item">
+            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+              <i class="fa fa-cogs d-lg-none d-xl-none"></i> Getting started
+            </a>
+            <div class="dropdown-menu dropdown-with-icons">
+              <a href="https://demos.creative-tim.com/blk-design-system/docs/1.0/getting-started/overview.html" class="dropdown-item">
+                <i class="tim-icons icon-paper"></i> Documentation
+              </a>
+              <a href="{% url 'editprofile'%}" class="dropdown-item">
+                <i class="tim-icons icon-bullet-list-67"></i>Edit Profile
+              </a>
+              <a href="examples/landing-page.html" class="dropdown-item">
+                <i class="tim-icons icon-image-02"></i>Landing Page
+              </a>
+              <a href="{% url 'profile' %}" class="dropdown-item">
+                <i class="tim-icons icon-single-02"></i>Profile Page
+              </a>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!-- End Navbar -->
+
+
+
+
+
+  <div class="wrapper">
+    <div class="page-header">
+      <img src="assets/img/dots.png" class="dots">
+      <img src="assets/img/path4.png" class="path">
+      <div class="container align-items-center">
+        <div class="row">
+          <div class="col-lg-6 col-md-6">
+            {%if user.is_authenticated%}
+              <h1 class="profile-title text-left">{{ name }}</h1>
+            {%endif%}
+            <h5 class="text-on-back"  >{{programme_name}}</h5>
+            <p class="profile-description">
+            {{description}}
+            </p>
+
+          </div>
+          <div class="col-lg-4 col-md-6 ml-auto mr-auto" >
+            <div class="card card-coin card-plain "  >
+              <div class="card-header">
+                <img src="{{ user.student.image.url }}" class="img-center img-fluid rounded-circle">
+                <h4 class="title">Progress</h4>
+              </div>
+              <div class="card-body" >
+                <ul class="nav nav-tabs nav-tabs-primary justify-content-center">
+                  <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#linka">
+                      Tasks
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#linkb">
+                      Results
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#linkc">
+                      Notifications
+                    </a>
+                  </li>
+                </ul>
+                <div class="tab-content tab-subcategories">
+                  <div class="tab-pane active" id="linka">
+                    <div class="table-responsive">
+                      <table class="table tablesorter " id="plain-table">
+                        <thead class=" text-primary">
+                          <tr>
+                            <th class="header">
+                              CODE
+                            </th>
+                            <th class="header">
+                              COUNT
+                            </th>
+                            <th class="header">
+                              TYPE
+                            </th>
+                            <th class="header">
+                              Date
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              ITCNA
+                            </td>
+                            <td>
+                              25%
+                            </td>
+                            <td>
+                              Exam
+                            </td>
+                            <td>
+                              26 October
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              ITISA
+                            </td>
+                            <td>
+                              30%
+                            </td>
+                            <td>
+                              Assignment
+                            </td>
+                            <td>
+                              12 October
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              ITPPA
+                            </td>
+                            <td>
+                              10%
+                            </td>
+                            <td>
+                              Online Test
+                            </td>
+                            <td>
+                              31 October
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+
+                  <div class="tab-pane " id="linkb">
+                    <div class="table-responsive">
+                      <table class="table tablesorter " id="plain-table">
+                        <thead class=" text-primary">
+                          <tr>
+                            <th class="header">
+                              CODE
+                            </th>
+                            <th class="header">
+                              COUNT
+                            </th>
+                            <th class="header">
+                              TYPE
+                            </th>
+                            <th class="header">
+                              Date
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                              ITCNA
+                            </td>
+                            <td>
+                              25%
+                            </td>
+                            <td>
+                              Exam
+                            </td>
+                            <td>
+                              26 October
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              ITISA
+                            </td>
+                            <td>
+                              30%
+                            </td>
+                            <td>
+                              Assignment
+                            </td>
+                            <td>
+                              12 October
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              ITPPA
+                            </td>
+                            <td>
+                              10%
+                            </td>
+                            <td>
+                              Online Test
+                            </td>
+                            <td>
+                              32 October
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+
+
+
+
+
+
+
+                 {%for quiz in quizes%}
+                  <div class="tab-pane" id="linkc">
+                    <div class="table-responsive">
+                      <table class="table tablesorter " id="plain-table">
+                        <thead class=" text-primary">
+                          <tr>
+                            
+                            <th class="header">
+                              Latest Quiz/Polls
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>
+                            <a href="{% url 'viewquiz' quiz.pk  %}">{{quiz.name}}-{{quiz.module}}</a>
+                              
+                            </td>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+                  {%endfor%}
+
+
+
+
+
+<div class="section">
+      <div class="container">
+        <div class="row justify-content-between">
+          <h2>Level OverView</h2>
+          <h1>
+          {{Modules_name}}, {{Score}}
+          </h1>
+           <style>
+            .chart--container {
+              height: 100%;
+              width: 100%;
+              min-height: 530px;
+            }
+
+            .zc-ref {
+              display: none;
+            }
+          </style>
+            <div id="OverViewChart" class="chart--container">
+              <a href="https://www.zingchart.com/" rel="noopener" class="zc-ref"></a>
+            </div>
+          <script>
+            ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"]; // DEFINE DATA
+            // -----------------------------
+            let images = {
+              devil: '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',
+              cloud: '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',
+              fireball: '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',
+              sun: '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'
+            };
+
+            let gcolors = ['#0AAEF6', '#08A8F6', '#0BA8F5', '#3AB5C5', '#72C58F', '#A6D15B', '#DDD324', '#FCB800', '#FC7300', '#FE2901', '#FD2300', '#FF0000'];
+
+            // HELPER METHODS
+            // -----------------------------
+            function rule_scaleY_item(p) {
+              return {
+                color: gcolors[p.index]
+              };
+            }
+
+            function rule_plot(p) {
+              let cindex = Math.round(p.value / 10);
+              let colors = gcolors.slice(0, cindex);
+              let stops = [],
+                step = parseFloat(Number(0.9 / colors.length).toFixed(2));
+              for (let i = 0; i < colors.length; i++) {
+                stops.push(parseFloat(Number(0.05 + i * step).toFixed(2)));
+              }
+              return {
+                gradientStops: stops.join(' '),
+                gradientColors: colors.join(' ')
+              };
+            }
+
+            function rule_plot_valueBox(p) {
+              let combo = p.plotindex + '-' + p.nodeindex;
+              let image = '';
+              switch (combo) {
+                case '1-0':
+                  image = images.cloud;
+                  break;
+                case '0-2':
+                  image = images.fireball;
+                  break;
+                case '1-3':
+                  image = images.sun;
+                  break;
+                case '0-5':
+                  image = images.devil;
+                  break;
+              }
+              if (image !== '') {
+                return {
+                  width: '46px',
+                  height: '80px',
+                  offsetY: '18px',
+                  canvasBackgroundPosition: '0 -18',
+                  backgroundImage: 'data:image/png;base64,' + image,
+                  backgroundRepeat: 'no-repeat'
+                };
+              }
+              return {
+                visible: false
+              }
+            }
+
+            // CHART CONFIG
+            // -----------------------------
+            let chartConfig = {
+              type: 'vbar',
+              globals: {
+                fontFamily: 'Lucida Sans Unicode'
+              },
+              backgroundColor: 'transparent',
+              title: {
+                text: 'Module Overview',
+                padding: '30px 5px',
+                color: '#ffffff',
+                fontSize: '15px'
+              },
+              plot: {
+                valueBox: {
+                  text: '%node-value°',
+                  backgroundColor: 'none',
+                  color: '#000000',
+                  jsRule: 'rule_plot_valueBox()',
+                  shadow: false
+                },
+                barSpace: 0.3,
+                barsSpaceLeft: 0.2,
+                barsSpaceRight: 0.2,
+                borderColor: '#000',
+                borderWidth: '1px',
+                fillAngle: 270,
+                jsRule: 'rule_plot()',
+                shadow: true,
+                shadowColor: '#111',
+                shadowDistance: 1
+              },
+              plotarea: {
+                margin: '100px 0px 40px 0px',
+                backgroundColor: '#000000'
+              },
+              scaleX: {
+                values: [{% for mod in Modules_name %} "{{mod}}", {%endfor%}],
+                item: {
+                  color: '#ffffff'
+                },
+                offsetStart: '50px',
+                offsetEnd: '20px',
+                lineWidth: '0px',
+                tick: {
+                  visible: false
+                }
+              },
+              scaleY: {
+                values: '0:110:10',
+                guide: {
+                  items: [{
+                      backgroundColor: '#252525'
+                    },
+                    {
+                      backgroundColor: '#121212'
+                    }
+                  ],
+                  lineColor: '#444444',
+                  lineStyle: 'solid'
+                },
+                item: {
+                  color: '#ffffff',
+                  fontWeight: 900,
+                  jsRule: 'rule_scaleY_item()',
+                  offsetX: '40px'
+                },
+                refLine: {
+                  visible: false
+                }
+              },
+              tooltip: {
+                text: '%plot-text IN %scale-key-text IS %node-value°',
+                padding: '10px',
+                backgroundColor: '#212121',
+                borderColor: '#000000',
+                borderWidth: '1px',
+                color: '#ffffff',
+                fontSize: '15px',
+                shadow: true,
+                shadowColor: '#424242'
+              },
+              resources: [{
+                  backgroundImage: 'data:image/png;base64,' + images.devil
+                },
+                {
+                  backgroundImage: 'data:image/png;base64,' + images.cloud
+                },
+                {
+                  backgroundImage: 'data:image/png;base64,' + images.fireball
+                },
+                {
+                  backgroundImage: 'data:image/png;base64,' + images.sun
+                }
+              ],
+              series: [{
+                  text: 'Module Count',
+                  
+                  values: [{% for score in Score %} {{score}}, {%endfor%} ]
+                },
+                {
+                  text: 'Your Score',
+                  values: [{% for mod in Modules_name %} {{mod.count}}, {%endfor%}]
+                  
+                }
+              ]
+            };
+
+            // RENDER CHARTS
+            // -----------------------------
+            zingchart.render({
+              id: 'OverViewChart',
+              data: chartConfig,
+              output: 'svg'
+            });
+          </script>
+          
+        
+
+
+        </div>
+      </div>
+ </div>
+
+
+
+  <div class="section">
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col-md-6">
+            {%for module in modules%}
+              {%if module.block == 1%}
+
+            <div class="card-group">
+              <div class="card">
+                <img class="card-img-top" src="..." alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title">  <a href="{% url 'module_guide' module.title %}">{{module.title}}  <em>{{module.code}}</em></a></h5>
+                  <p class="card-text">{{module.description|truncatewords:"100"}}</p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
+
+            </div>
+            {%endif%}
+            {%endfor%}
+
+          </div>
+          <div class="col-md-5">
+            <h1 class="profile-title text-left">Modules</h1>
+            <h5 class="text-on-back">Block 1</h5>
+            <p class="profile-description text-left">An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. An artist of considerable range.</p>
+            <div class="btn-wrapper pt-3">
+              <button href="javascript:void(0)" class="btn btn-simple btn-primary">
+                <i class="tim-icons icon-book-bookmark"></i> Bookmark
+              </button>
+              <button href="javascript:void(0)" class="btn btn-simple btn-info">
+                <i class="tim-icons icon-bulb-63"></i> Check it!
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div class="section">
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col-md-6">
+            {%for module in modules%}
+              {%if module.block == 2%}
+
+            <div class="card-group">
+              <div class="card">
+                <img class="card-img-top" src="..." alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title"><a href="{% url 'module_guide' module.title %}">{{module.title}}  <em>{{module.code}}</em></a></h5>
+                  <p class="card-text">{{module.description|truncatewords:"100"}}</p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
+
+            </div>
+            {%endif%}
+            {%endfor%}
+
+          </div>
+          <div class="col-md-5">
+            <h1 class="profile-title text-left">Modules</h1>
+            <h5 class="text-on-back">Block 2</h5>
+            <p class="profile-description text-left">An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. An artist of considerable range.</p>
+            <div class="btn-wrapper pt-3">
+              <button href="javascript:void(0)" class="btn btn-simple btn-primary">
+                <i class="tim-icons icon-book-bookmark"></i> Bookmark
+              </button>
+              <button href="javascript:void(0)" class="btn btn-simple btn-info">
+                <i class="tim-icons icon-bulb-63"></i> Check it!
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+      <div class="section">
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col-md-6">
+            {%for module in modules%}
+              {%if module.block == 3%}
+
+            <div class="card-group">
+              <div class="card">
+                <img class="card-img-top" src="..." alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title">
+                     {{module.title}}<em>{{module.code}}</em></h5>
+                  <p class="card-text">{{module.description|truncatewords:"100"}}</p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
+
+            </div>
+            {%endif%}
+            {%endfor%}
+
+          </div>
+          <div class="col-md-5">
+            <h1 class="profile-title text-left">Modules</h1>
+            <h5 class="text-on-back">Block 3</h5>
+            <p class="profile-description text-left">An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. An artist of considerable range.</p>
+            <div class="btn-wrapper pt-3">
+              <button href="javascript:void(0)" class="btn btn-simple btn-primary">
+                <i class="tim-icons icon-book-bookmark"></i> Bookmark
+              </button>
+              <button href="javascript:void(0)" class="btn btn-simple btn-info">
+                <i class="tim-icons icon-bulb-63"></i> Check it!
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  <div class="section">
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col-md-6">
+            {%for module in modules%}
+              {%if module.block == 4%}
+
+            <div class="card-group">
+              <div class="card">
+                <img class="card-img-top" src="..." alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title">{{module.title}}  <em>{{module.code}}</em></h5>
+                  <p class="card-text">{{module.description|truncatewords:"100"}}</p>
+                  <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
+
+            </div>
+            {%endif%}
+            {%endfor%}
+
+          </div>
+          <div class="col-md-5">
+            <h1 class="profile-title text-left">Modules</h1>
+            <h5 class="text-on-back">Block 4</h5>
+            <p class="profile-description text-left">An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. An artist of considerable range.</p>
+            <div class="btn-wrapper pt-3">
+              <button href="javascript:void(0)" class="btn btn-simple btn-primary">
+                <i class="tim-icons icon-book-bookmark"></i> Bookmark
+              </button>
+              <button href="javascript:void(0)" class="btn btn-simple btn-info">
+                <i class="tim-icons icon-bulb-63"></i> Check it!
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <span><img src="myimg/lofo.png" width="25"></span>
+            <span class="navbar-brand">EduDash•</span>
+          </div>
+          <div class="col-md-3">
+            <ul class="nav">
+              <li class="nav-item">
+                <a href="index.html" class="nav-link">
+                  Home
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="index.html" class="nav-link">
+                  About Our Creator
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="profile-page.html" class="nav-link">
+                  Profile
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <ul class="nav">
+              <li class="nav-item">
+                <a href="https://creative-tim.com/contact-us" class="nav-link">
+                  Contact Us
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="https://creative-tim.com/about-us" class="nav-link">
+                  About Us
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="https://creative-tim.com/blog" class="nav-link">
+                  Blog
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="https://opensource.org/licenses/MIT" class="nav-link">
+                  License
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <h3 class="title">Follow us:</h3>
+            <div class="btn-wrapper profile">
+              <a target="_blank" href="https://twitter.com/creativetim" class="btn btn-icon btn-neutral btn-round btn-simple" data-toggle="tooltip" data-original-title="Follow us">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a target="_blank" href="https://www.facebook.com/creativetim" class="btn btn-icon btn-neutral btn-round btn-simple" data-toggle="tooltip" data-original-title="Like us">
+                <i class="fab fa-facebook-square"></i>
+              </a>
+              <a target="_blank" href="https://dribbble.com/creativetim" class="btn btn-icon btn-neutral  btn-round btn-simple" data-toggle="tooltip" data-original-title="Follow us">
+                <i class="fab fa-dribbble"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <!--   Core JS Files   -->
+  <script src="{% static 'structure/assets/js/core/jquery.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'structure/assets/js/core/popper.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'structure/assets/js/core/bootstrap.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'structure/assets/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
+  <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+  <script src="{% static 'structure/assets/js/plugins/bootstrap-switch.js' %}"></script>
+  <!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
+  <script src="{% static 'structure/assets/js/plugins/nouislider.min.js' %}" type="text/javascript"></script>
+  <!-- Chart JS -->
+  <script src="{% static 'structure/assets/js/plugins/chartjs.min.js' %}"></script>
+  <!--  Plugin for the DatePicker, full documentation here: https://github.com/uxsolutions/bootstrap-datepicker -->
+  <script src="{% static 'structure/assets/js/plugins/moment.min.js' %}"></script>
+  <script src="{% static 'structure/assets/js/plugins/bootstrap-datetimepicker.js' %}" type="text/javascript"></script>
+
+  <!-- Control Center for Black UI Kit: parallax effects, scripts for the example pages etc -->
+  <script src="{% static 'structure/assets/js/blk-design-system.min.js' %}" type="text/javascript"></script>
+</body>
+
+</html>

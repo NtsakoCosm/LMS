@@ -1,0 +1,28 @@
+{%extends "base.html"%}
+{%load static%}
+
+{%block content%}
+   
+
+
+<p><em>Quiz name :</em>{{object.name}}</p>
+<p><em>Module name :</em>{{object.module}}</p>
+<p><em>Objective :</em>{{object.objective}}</p>
+<p><em>Chapter :</em>{{object.chapter}}</p>
+
+<form method="post" action id = "quiz-form">
+    {% csrf_token %}
+    <div id="quiz-box">
+        
+        
+    </div>
+    <button type="submit">Submit</button>
+
+</form>
+
+  
+  
+{%endblock content%}
+{%block script%}
+<script src="{% static 'structure/quiz.js' %}" defer >  </script>
+{%endblock script%}
